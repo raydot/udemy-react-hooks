@@ -9,4 +9,23 @@ root.render(
   <App />
 );
 
+// Let's explore the nuanced difference between
+// using the 'function' keyword and arrow functions
+function createObject() {
+  console.log('outermost this:', this) // undefined
+
+  return { // return an object
+    arrowFunction: () => {
+      console.log('arrowFunction this:', this) // undefined
+    },
+    functionKeywordFunction: function () {
+      console.log('functionKeyword this:', this) // points to both!
+    }
+  }
+}
+
+const obj = createObject();
+console.log('obj:', obj)
+obj.arrowFunction()
+obj.functionKeywordFunction()
 

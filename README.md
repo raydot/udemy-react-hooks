@@ -6,6 +6,8 @@
 
 `useEffect` is so called because it allows you to manage side effects in React.
 
+Section 02_11 has an interesting discussion between using `function` and using arrow functions and what the differences are between the two.  Most notably, the arrow function does not create a binding to `this`.
+
 
 ## Getting Started with Create React App Boilerplate:
 
