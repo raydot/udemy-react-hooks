@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Joke from './Joke'
 import Stories from './Stories'
-
+import Tasks from './Tasks'
 
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
   }
 
   const updateUserQuery = event => {
-    console.log('userquery:', userQuery)
     setUserQuery(event.target.value)
+    console.log('userquery:', userQuery)
   }
 
   const handleKeyPress = event => {
@@ -31,6 +31,8 @@ function App() {
       </div>
       <hr />
       <Joke />
+      <hr />
+      <Tasks />
       <hr />
       <Stories />
     </div>
