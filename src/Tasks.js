@@ -1,10 +1,30 @@
 import React, { useState } from 'react'
 import uuid from 'uuid/v4';
 
+let i = 0;
+
 function Tasks() {
     const [taskText, setTaskText] = useState('')
-    const [tasks, setTasks] = useState([])
-    const [completedTasks, setCompletedTasks] = useState([])
+
+    let tasks, setTasks, completedTasks, setCompletedTasks;
+
+    /* eslint-disable-next-line react-hooks/rules-of-hooks */
+    if (i % 2 == 0) {
+        ([tasks, setTasks] = useState([]));
+        ([completedTasks, setCompletedTasks] = useState([]));
+    } else {
+        let [foo, setFoo] = useState([])
+        let [bar, setBar] = useState([])
+        tasks = foo
+        setTasks = setFoo
+        completedTasks = bar
+        setCompletedTasks = setBar
+        // ([completedTasks, setCompletedTasks] = useState([]));
+        // ([tasks, setTasks] = useState([]));
+    }
+    /* eslint-disable-next-line react-hooks/rules-of-hooks */
+    i++
+
 
     const updateTaskText = event => {
         setTaskText(event.target.value)
