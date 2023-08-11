@@ -1,29 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import uuid from 'uuid/v4';
 
-let i = 0;
+// Add local storage
+const TASKS_STORAGE_KEY = 'TASKS_STORAGE_KEY' // global
+
+// const storeTasks = ({tasks, completedTasks}) => {
+//     localStorage.setItem(
+//         TASKS_STORAGE_KEY,
+//         JSON.stringify({tasks, completedTasks})
+//     );
+// }
+
+// Since we're receiving an object, we don't need to spell out all the vars (destructure)
+const storeTasks = (taskMap) => {
+    localStorage.setItem(
+        TASKS_STORAGE_KEY,
+        JSON.stringify({ taskMap })
+    )
+}
+
+const readStoredTasks = () => {
+    const tasksMap = JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY))
+
+    return tasksMap ? tasksMap : { tasks: [], completedTasks: [] }
+}
 
 function Tasks() {
     const [taskText, setTaskText] = useState('')
+    const storedTasks = readStoredTasks()
+    console.log(`storedTasks: ${JSON.stringify(storedTasks)}`)
+    const [tasks, setTasks] = useState(storedTasks.taskMap.tasks);
+    const [completedTasks, setCompletedTasks] = useState(storedTasks.taskMap.completedTasks);
 
-    let tasks, setTasks, completedTasks, setCompletedTasks;
-
-    /* eslint-disable-next-line react-hooks/rules-of-hooks */
-    if (i % 2 == 0) {
-        ([tasks, setTasks] = useState([]));
-        ([completedTasks, setCompletedTasks] = useState([]));
-    } else {
-        let [foo, setFoo] = useState([])
-        let [bar, setBar] = useState([])
-        tasks = foo
-        setTasks = setFoo
-        completedTasks = bar
-        setCompletedTasks = setBar
-        // ([completedTasks, setCompletedTasks] = useState([]));
-        // ([tasks, setTasks] = useState([]));
-    }
-    /* eslint-disable-next-line react-hooks/rules-of-hooks */
-    i++
+    useEffect(() => {
+        storeTasks({ tasks, completedTasks })
+    })
 
 
     const updateTaskText = event => {
