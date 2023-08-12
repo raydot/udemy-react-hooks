@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PICTURES from './data/pictures'
+
+import { useDynamicTransition } from './hooks'
 
 const SECONDS = 1000
 const minimumDelay = 1 * SECONDS
 const minimumIncrement = 1
 
 function Gallery() {
-    const [index, setIndex] = useState(0)
+    //const [index, setIndex] = useState(0)
     const [delay, setDelay] = useState(3 * SECONDS)
     const [increment, setIncrement] = useState(1)
 
-    useEffect(() => {
-        // console.log('delay:', delay, 'interval:', interval)
-        const interval = setInterval(() => {
-            setIndex(storedIndex => {
-                return ((storedIndex + increment) % PICTURES.length) // without this callback storedIndex will not increase due to scope
-            })
-        }, delay);
-        return () => {
-            clearInterval(interval) // cleanup function for interval side effects (although it wasn't throwing an error for me)
-        }
-    }, [delay, increment]) // [] means only fire after Gallery renders
-
-    // console.log('index', index)
+    const index = useDynamicTransition({
+        delay, increment, length: PICTURES.length
+    })
 
     const updateDelay = event => {
         const delay = Number(event.target.value) * SECONDS
